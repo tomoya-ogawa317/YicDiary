@@ -1,0 +1,43 @@
+create table relation(
+  relation  nvarchar(5),
+  gender    nchar(1)     NOT NULL,
+  primary key(relation)
+);
+
+create table schedule(
+  date      date,
+  relation  nvarchar(5),
+  category  nvarchar(10)   NOT NULL,
+  contents  nvarchar(300)  NOT NULL,
+  primary key(date)
+);
+
+create table family(
+  last_name   nvarchar(15),
+  password    nvarchar(20),
+  relation    nvarchar(5)  NOT NULL,
+  first_name  nvarchar(5)  NOT NULL,
+  birthday    date         NOT NULL,
+  primary key(last_name, password)
+);
+
+create table id(
+  id         int           AUTO_INCREMENT,
+  date       date          NOT NULL,
+  last_name  nvarchar(15)  NOT NULL,
+  password   nvarchar(20)  NOT NULL,
+  primary key(id),
+  foreign key(date) references schedule(date),
+  foreign key(last_name, password) references family(last_name, password)
+);
+
+
+insert into relation values('母', '女');
+insert into schedule values('2022-06-09', '母', '学校', '授業');
+insert into family values('智子', 'tomoko0408', '母', '田中', '1980-04-08');
+insert into id values(1, '2022-06-09', '智子', 'tomoko0408');
+
+insert into relation values('兄', '男');
+insert into schedule values('2022-07-25', '兄', '学校', '部活');
+insert into family values('聡', 'satosi0608', '兄', '田中', '2000-06-08');
+insert into id values(2, '2022-07-25', '聡', 'satosi0608');
